@@ -40,10 +40,13 @@ export interface PackageJson {
    * npm config values for publish time. like setting an alternate registry
    */
   publishConfig?:ObjectOfStrings;
+  [field: string]: unknown;
 }
 
 // this is what you get from the npm api.
 export interface Packument {
+  _id: string;
+  _rev: string;
   name: string;
   readme?: string;
   description?: string;
@@ -59,6 +62,8 @@ export interface Packument {
   license: string;
   // left out users (stars) deprecated, and attachments (does nothing)
   readmeFilename?: string;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  _attachments: {};
 }
   
 // https://docs.npmjs.com/files/package-lock.json
@@ -92,10 +97,10 @@ export interface PackumentVersion extends PackageJson {
   /**
    * packagename@versionstring
    */
-  id: string;
-  npmVersion: string;
-  nodeVersion: string;
-  npmUser: Maintainer;
+  _id: string;
+  _npmVersion: string;
+  _nodeVersion: string;
+  _npmUser: Maintainer;
   maintainers: Maintainer[];
   dist: Dist;
   _hasShrinkwrap?: boolean;
@@ -129,7 +134,7 @@ export interface ManifestVersion{
   _hasShrinkwrap?:boolean;
   directories?:Directories;
   dist:Dist;
-  engines:ObjectOfStrings;
+  engines?:ObjectOfStrings;
   deprecated?:string;
 }
 
